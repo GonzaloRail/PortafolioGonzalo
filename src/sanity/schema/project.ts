@@ -1,0 +1,32 @@
+import { defineField, defineType } from "sanity";
+
+export const projectType = defineType({
+  name: "project",
+  title: "Proyecto",
+  type: "document",
+  fields: [
+    defineField({ name: "title", title: "Título", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({ name: "slug", title: "URL", type: "slug", options: { source: "title", maxLength: 96 }, validation: (Rule) => Rule.required() }),
+    defineField({ name: "excerpt", title: "Resumen", type: "text", rows: 3, validation: (Rule) => Rule.required().max(190) }),
+    defineField({ name: "year", title: "Año", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({ name: "category", title: "Categoría", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({ name: "role", title: "Rol", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({ name: "technologies", title: "Tecnologías", type: "array", of: [{ type: "string" }], validation: (Rule) => Rule.min(1) }),
+    defineField({ name: "featured", title: "Destacar en inicio", type: "boolean", initialValue: false }),
+    defineField({ name: "order", title: "Orden", type: "number", initialValue: 100 }),
+    defineField({ name: "accent", title: "Color de acento", type: "string", options: { list: ["coral", "blue", "lime"] }, initialValue: "coral" }),
+    defineField({ name: "coverImage", title: "Imagen de portada", type: "image", options: { hotspot: true } }),
+    defineField({ name: "gallery", title: "Galería", type: "array", of: [{ type: "image", options: { hotspot: true } }] }),
+    defineField({ name: "challenge", title: "El reto", type: "text", rows: 5 }),
+    defineField({ name: "solution", title: "La respuesta", type: "text", rows: 5 }),
+    defineField({ name: "outcome", title: "El resultado", type: "text", rows: 5 }),
+    defineField({ name: "participation", title: "Mi participación", type: "text", rows: 5 }),
+    defineField({ name: "tools", title: "Herramientas", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "methodologies", title: "Metodologías y prácticas", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "results", title: "Resultados verificables", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "liveUrl", title: "Enlace a demo", type: "url" }),
+    defineField({ name: "repositoryUrl", title: "Enlace al repositorio", type: "url" }),
+  ],
+  orderings: [{ title: "Orden manual", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
+  preview: { select: { title: "title", subtitle: "category", media: "coverImage" } },
+});
